@@ -1,0 +1,984 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>tonie.ai · AI wind forecasting and microgrid routing for desert energy</title>
+<meta name="description" content="tonie.ai forecasts the output of desert wind sites and routes every kilowatt between turbines, solar and storage. AI wind forecasting and hybrid microgrid routing for remote and off-grid energy.">
+<meta name="keywords" content="wind forecasting, desert wind energy, AI energy forecasting, microgrid routing, hybrid microgrid, off-grid energy, renewable energy AI, wind power prediction, battery dispatch">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://tonie.ai/">
+<meta name="theme-color" content="#E6E8E6">
+<meta name="color-scheme" content="light">
+<meta name="author" content="tonie.ai">
+
+<!-- Google Search Console: paste the verification tag Google gives you here, or verify with a DNS TXT record instead -->
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="tonie.ai">
+<meta property="og:url" content="https://tonie.ai/">
+<meta property="og:title" content="tonie.ai · Wind, predicted.">
+<meta property="og:description" content="AI wind forecasting and microgrid routing for desert energy sites. Remote energy, as dependable as the grid.">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tonie.ai · Wind, predicted.">
+<meta name="twitter:description" content="AI wind forecasting and microgrid routing for desert energy sites.">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tonie.ai/#org",
+      "name": "tonie.ai",
+      "url": "https://tonie.ai/",
+      "email": "contact@tonie.ai",
+      "logo": "https://tonie.ai/favicon.svg",
+      "description": "AI wind forecasting and microgrid routing for desert energy sites.",
+      "contactPoint": { "@type": "ContactPoint", "email": "contact@tonie.ai", "contactType": "sales" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://tonie.ai/#website",
+      "url": "https://tonie.ai/",
+      "name": "tonie.ai",
+      "publisher": { "@id": "https://tonie.ai/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "tonie Forecast",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Hour-ahead to 72-hour output forecasts for desert wind sites, with P10–P90 uncertainty bands.",
+      "publisher": { "@id": "https://tonie.ai/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "tonie Grid",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Real-time routing for off-grid and hybrid microgrids across wind, solar and battery storage.",
+      "publisher": { "@id": "https://tonie.ai/#org" }
+    }
+  ]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..700&family=Martian+Mono:wght@300;400&display=swap">
+<style>
+html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: an engineer's drawing at dawn. Cool fog ground, ink line-work, one aviation-orange signal. Editorial rows on a 12-column measure; hairlines instead of boxes; one giant turbine as the only image. */
+:root{
+  --fog:#E6E8E6; --fog-2:#DCDFDC; --paper:#F1F2F0;
+  --ink:#121413; --ink-2:#3B403D; --mute:#5D635F; --hair:#B9BEBA;
+  --signal:#FF4A0D; --signal-ink:#C93A08;
+  --f-display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:"Martian Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --col:1360px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--fog);color:var(--ink);font-family:var(--f-display);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--signal);color:var(--paper)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+h1,h2,h3,p{margin:0}
+h1,h2{font-stretch:125%;font-weight:300;letter-spacing:-0.045em;line-height:.92;text-wrap:balance}
+.wrap{max-width:var(--col);margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+.mono{font-family:var(--f-mono);font-size:11px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
+.sig{color:var(--signal-ink)}
+.rule{height:1px;background:var(--hair);border:0;margin:0}
+
+/* Header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:10;background:var(--fog)}
+header{position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:color-mix(in srgb, var(--fog) 86%, transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding-block:18px}
+.wordmark{font-stretch:125%;font-weight:500;font-size:19px;letter-spacing:-0.03em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.wordmark i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal);animation:beacon 2.4s steps(1) infinite}
+.links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 28px}
+.links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink-2)}
+.links a:hover{color:var(--signal-ink)}
+.links .cta{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--ink);border-radius:999px;color:var(--ink);transition:background-color .3s,color .3s}
+.links .cta:hover{background:var(--ink);color:var(--paper)}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+#flow{position:absolute;inset:0;width:100%;height:100%;z-index:-2;display:block}
+#mesh{position:absolute;inset:0;width:100%;height:100%;z-index:-1;display:block;pointer-events:none}
+.turbine{position:absolute;z-index:-1;right:-4%;top:-6%;height:118%;width:auto;max-width:none;pointer-events:none;overflow:visible}
+.turbine .rotor{transform-origin:600px 330px;animation:spin 7s linear infinite}
+.hero-inner{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;padding-block:120px 72px;min-height:min(860px, 92vh)}
+.hero-meta{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px 32px;align-self:start}
+.hero h1{grid-column:1 / span 9;align-self:end;font-size:clamp(64px,12.4vw,196px)}
+.hero h1 span{display:block}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero-foot{grid-column:1 / -1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;align-items:end;padding-top:36px}
+.hero-foot p{grid-column:1 / span 5;font-size:clamp(17px,1.5vw,20px);color:var(--ink-2);max-width:30em}
+.hero-foot .actions{grid-column:7 / -1;display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+.btn{display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 26px;border-radius:999px;font:500 15px var(--f-display);text-decoration:none;cursor:pointer;border:1px solid var(--ink);transition:background-color .3s,color .3s,gap .3s}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn-ink:hover{background:var(--signal);border-color:var(--signal);gap:18px}
+.btn-line{background:transparent;color:var(--ink)}
+.btn-line:hover{background:var(--ink);color:var(--paper)}
+.arrow{display:inline-block;width:16px;height:1px;background:currentColor;position:relative}
+.arrow::after{content:"";position:absolute;right:0;top:-3px;width:7px;height:7px;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg)}
+.load{animation:lift 1.3s cubic-bezier(.16,.84,.24,1) both}
+.l1{animation-delay:.1s}.l2{animation-delay:.22s}.l3{animation-delay:.4s}.l4{animation-delay:.55s}
+
+/* Statement */
+.statement{padding-block:140px 120px;background:var(--paper)}
+.statement .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px}
+.statement .mono{grid-column:1 / span 3}
+.statement p.big{grid-column:4 / -1;font-stretch:112%;font-weight:300;font-size:clamp(28px,3.6vw,54px);line-height:1.12;letter-spacing:-0.03em;text-wrap:balance}
+.statement p.big b{font-weight:300;color:var(--signal)}
+
+/* Product rows */
+.product{padding-block:120px;border-top:1px solid var(--hair)}
+.product .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:48px 20px;align-items:start}
+.p-head{grid-column:1 / span 5;display:flex;flex-direction:column;gap:28px;position:sticky;top:110px}
+.p-head h2{font-size:clamp(52px,7.2vw,112px)}
+.p-head p{font-size:18px;color:var(--ink-2);max-width:28em}
+.specs{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair)}
+.specs div{padding:16px 0;border-bottom:1px solid var(--hair);display:flex;flex-direction:column;gap:6px}
+.specs div:nth-child(odd){padding-right:16px}
+.specs b{font-weight:400;font-stretch:112%;font-size:22px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.p-viz{grid-column:7 / -1;min-width:0;display:flex;flex-direction:column;gap:16px}
+.instrument{background:var(--paper);border-radius:4px;padding:28px 28px 20px}
+.instrument svg{width:100%;height:auto;display:block;overflow:visible}
+.inst-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.legend{display:flex;gap:20px;flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{display:inline-block;width:18px;height:2px;background:var(--signal)}
+.legend i.band{height:10px;background:var(--fog-2)}
+.legend i.obs{height:0;border-top:1px dashed var(--ink)}
+.fcst .gl{stroke:var(--hair);stroke-width:1}
+.fcst .band{fill:var(--fog-2)}
+.fcst .p50{fill:none;stroke:var(--signal);stroke-width:2;stroke-linecap:round}
+.fcst .obs{fill:none;stroke:var(--ink);stroke-width:1.2;stroke-dasharray:3 4}
+.fcst .now{stroke:var(--ink);stroke-width:1}
+.fcst text,.routing text,.loop-svg text{font:300 10px var(--f-mono);fill:var(--mute);letter-spacing:.04em}
+.fcst text.k{fill:var(--ink)}
+.caption{font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
+.routing .wire{fill:none;stroke:var(--ink);stroke-width:1}
+.routing .node{fill:var(--paper);stroke:var(--ink);stroke-width:1}
+.routing .hub{fill:var(--paper);stroke:var(--signal);stroke-width:1.5}
+.routing .ring{fill:none;stroke:var(--signal);stroke-width:1;transform-box:fill-box;transform-origin:center;animation:ring 3s ease-out infinite}
+.routing .e{fill:var(--signal)}
+.routing text.n{fill:var(--ink);font-size:11px}
+.totals{display:flex;flex-wrap:wrap;gap:6px 18px}
+.totals b{font-weight:400;color:var(--ink);font-variant-numeric:tabular-nums}
+.gridsim{display:block;width:100%;aspect-ratio:640/380;max-width:100%}
+.glog{list-style:none;margin:14px 0 0;padding:12px 0 0;border-top:1px solid var(--hair);display:flex;flex-direction:column;gap:6px;min-height:72px}
+.glog li{display:grid;grid-template-columns:52px 1fr;gap:12px;font-family:var(--f-mono);font-size:11px;letter-spacing:.02em;color:var(--mute);animation:logIn .6s cubic-bezier(.2,.8,.2,1) both}
+.glog li:first-child{color:var(--ink)}
+.glog li span:first-child{color:var(--signal-ink);font-variant-numeric:tabular-nums}
+@keyframes logIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* Loop */
+.loop{padding-block:130px;background:var(--ink);color:var(--paper)}
+.loop .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:48px 20px;align-items:center}
+.loop .mono{color:#9AA19C}
+.loop-copy{grid-column:1 / span 5;display:flex;flex-direction:column;gap:36px}
+.loop-copy h2{font-size:clamp(44px,5.4vw,84px)}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.steps li{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:18px 0;border-top:1px solid #333836}
+.steps li:last-child{border-bottom:1px solid #333836}
+.steps b{font-weight:400;font-stretch:112%;font-size:20px;letter-spacing:-0.02em}
+.steps p{color:#B8BFBA;font-size:16px}
+.steps li{position:relative;transition:padding-left .5s cubic-bezier(.2,.8,.2,1)}
+.steps li::before{content:"";position:absolute;left:0;top:26px;width:0;height:2px;background:var(--signal);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.steps li.on{padding-left:22px}
+.steps li.on::before{width:12px}
+.steps li.on b{color:var(--signal)}
+.loopsim{display:block;width:100%;max-width:560px;aspect-ratio:1/1}
+.loop-viz{grid-column:7 / -1;min-width:0;display:flex;justify-content:center}
+.loop-svg{width:100%;max-width:560px;height:auto;overflow:visible}
+.loop-svg .orbit{fill:none;stroke:#3C423F;stroke-width:1}
+.loop-svg .tick{stroke:#6A716D;stroke-width:1}
+.loop-svg .pt{fill:var(--ink);stroke:var(--paper);stroke-width:1}
+.loop-svg text{fill:#C9CFCB;font-size:11px}
+.loop-svg .runner{fill:var(--signal)}
+.loop-svg .trail{fill:none;stroke:var(--signal);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:90 862;transform-origin:280px 280px;animation:orbit 12s linear infinite}
+
+/* Conditions */
+.cond{padding-block:130px}
+.cond .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:48px 20px}
+.cond-head{grid-column:1 / span 4;display:flex;flex-direction:column;gap:24px}
+.cond-head h2{font-size:clamp(40px,4.6vw,72px)}
+.cond-list{grid-column:6 / -1;list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.cond-list li{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) auto;gap:20px;align-items:baseline;padding:26px 0;border-bottom:1px solid var(--hair);transition:padding .4s cubic-bezier(.2,.8,.2,1)}
+.cond-list li:hover{padding-left:12px}
+.cond-list h3{font-stretch:112%;font-weight:400;font-size:24px;letter-spacing:-0.02em}
+.cond-list p{color:var(--ink-2);font-size:16px}
+
+/* Where */
+.where{padding-block:130px;background:var(--paper)}
+.where .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:48px 20px}
+.where-head{grid-column:1 / span 4;display:flex;flex-direction:column;gap:24px}
+.where-head h2{font-size:clamp(40px,4.6vw,72px)}
+.places{grid-column:6 / -1;list-style:none;margin:0;padding:0}
+.places li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--hair)}
+.places li.hub{border-top:1px solid var(--ink)}
+.places .name{font-stretch:118%;font-weight:300;font-size:clamp(30px,4vw,56px);letter-spacing:-0.04em;line-height:1}
+.places li.hub .name{color:var(--signal)}
+.places .meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right}
+.places .time{font:300 14px var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* Roadmap */
+.road{padding-block:130px}
+.road .wrap{display:flex;flex-direction:column;gap:56px}
+.road h2{font-size:clamp(40px,4.6vw,72px);max-width:12em}
+.phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.phase{display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid var(--hair);position:relative}
+.phase::before{content:"";position:absolute;top:-1px;left:0;height:1px;width:var(--w,33%);background:var(--ink)}
+.phase.now::before{background:var(--signal);height:2px;top:-1.5px}
+.phase h3{font-stretch:112%;font-weight:400;font-size:26px;letter-spacing:-0.025em}
+.phase p{color:var(--ink-2);font-size:16px;max-width:24em}
+
+/* Access */
+.access{padding-block:150px 120px;background:var(--ink);color:var(--paper)}
+.access .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 20px;align-items:end}
+.access h2{grid-column:1 / span 7;font-size:clamp(56px,8vw,128px)}
+.access h2 em{font-style:normal;color:var(--signal)}
+form{grid-column:8 / -1;display:flex;flex-direction:column;gap:28px}
+.field{display:flex;flex-direction:column;gap:8px}
+label{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:#9AA19C}
+input,select{min-height:52px;padding:0;border:0;border-bottom:1px solid #4A504D;border-radius:0;background:transparent;color:var(--paper);font:300 22px var(--f-display);font-stretch:112%;letter-spacing:-0.01em;appearance:none;-webkit-appearance:none}
+select{cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,#9AA19C 50%),linear-gradient(-45deg,transparent 50%,#9AA19C 50%);background-position:calc(100% - 12px) 50%,calc(100% - 6px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+select option{color:var(--ink)}
+input::placeholder{color:#6A716D}
+input:focus,select:focus{outline:none;border-bottom-color:var(--signal)}
+form .btn{align-self:flex-start;background:var(--paper);color:var(--ink);border-color:var(--paper)}
+form .btn:hover{background:var(--signal);border-color:var(--signal);color:var(--ink)}
+.form-msg{font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;color:var(--signal);min-height:1.2em}
+.mailrow{display:flex;flex-direction:column;gap:10px;padding-top:24px;border-top:1px solid #333836}
+.mailbox{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px}
+.mail{font-stretch:112%;font-weight:300;font-size:clamp(22px,2.4vw,30px);letter-spacing:-0.02em;color:var(--paper);text-decoration:none;user-select:all;border-bottom:1px solid transparent;transition:border-color .3s,color .3s}
+.mail:hover{color:var(--signal);border-bottom-color:var(--signal)}
+.copy{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #4A504D;background:transparent;color:#C9CFCB;font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;transition:border-color .3s,color .3s}
+.copy:hover{border-color:var(--signal);color:var(--signal)}
+
+footer{background:var(--ink);color:#9AA19C;overflow:hidden}
+.foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:28px;border-top:1px solid #333836}
+.foot-row a{text-decoration:none}.foot-row a:hover{color:var(--paper)}
+.giant{font-stretch:125%;font-weight:200;font-size:clamp(120px,27vw,420px);letter-spacing:-0.07em;line-height:.75;color:#1F2321;margin-bottom:-0.12em;white-space:nowrap;user-select:none}
+
+/* Scroll-linked reveals (content is visible at rest; supporting browsers animate it in) */
+@supports (animation-timeline: view()){
+  .reveal{animation:fade linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+  .wipe{animation:wipe linear both;animation-timeline:view();animation-range:entry 10% cover 40%}
+  .draw{stroke-dasharray:1;stroke-dashoffset:0;animation:draw linear both;animation-timeline:view();animation-range:entry 20% cover 55%}
+  .phase::before{animation:grow linear both;animation-timeline:view();animation-range:entry 30% cover 60%}
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes beacon{0%{opacity:1}50%{opacity:.2}}
+@keyframes lift{from{opacity:.01;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:.2;transform:translateY(48px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0);transform:translateY(30px)}to{clip-path:inset(0 0 0 0);transform:none}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes grow{from{width:0}to{width:var(--w,33%)}}
+@keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.4);opacity:0}}
+@keyframes orbit{to{transform:rotate(360deg)}}
+
+@media (max-width:900px){
+  .hero h1,.hero-foot p,.hero-foot .actions,.statement .mono,.statement p.big,.p-head,.p-viz,.loop-copy,.loop-viz,.cond-head,.cond-list,.where-head,.places,.access h2,form{grid-column:1 / -1}
+  .hero-foot .actions{justify-content:flex-start}
+  .p-head{position:static}
+  .turbine{right:-38%;opacity:.35}
+  .cond-list li{grid-template-columns:1fr;gap:8px}
+  .steps li{grid-template-columns:1fr;gap:4px}
+}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="wordmark" href="#top"><i aria-hidden="true"></i>tonie.ai</a>
+      <div class="links">
+        <a href="#forecast">Forecast</a>
+        <a href="#grid">Grid</a>
+        <a href="#loop">System</a>
+        <a href="#where">Regions</a>
+        <a class="cta" href="#access">Join the pilot</a>
+      </div>
+    </nav>
+  </div>
+  <hr class="rule">
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="Introduction">
+    <canvas id="flow" aria-hidden="true"></canvas>
+    <canvas id="mesh" aria-hidden="true"></canvas>
+    <svg class="turbine" viewBox="0 0 900 1400" aria-hidden="true">
+      <polygon points="589,350 611,350 624,1400 576,1400" fill="#121413"></polygon>
+      <rect x="560" y="312" width="96" height="34" rx="12" fill="#121413"></rect>
+      <g class="rotor">
+        <path d="M600 330 C 588 250, 590 120, 604 -40 C 612 120, 616 250, 610 330 Z" fill="#121413"></path>
+        <path d="M600 330 C 588 250, 590 120, 604 -40 C 612 120, 616 250, 610 330 Z" fill="#121413" transform="rotate(120 600 330)"></path>
+        <path d="M600 330 C 588 250, 590 120, 604 -40 C 612 120, 616 250, 610 330 Z" fill="#121413" transform="rotate(240 600 330)"></path>
+        <circle cx="600" cy="330" r="22" fill="#121413"></circle>
+        <circle cx="600" cy="330" r="5" fill="#FF4A0D"></circle>
+      </g>
+    </svg>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-meta load">
+          <span class="mono">Desert wind intelligence</span>
+          <span class="mono">Every desert · ⅓ of Earth's land</span>
+          <span class="mono">Forecast · Grid</span>
+        </div>
+        <h1 class="load l1"><span>Wind,</span><span><em>predicted.</em></span></h1>
+        <div class="hero-foot">
+          <p class="load l2">tonie.ai forecasts the output of desert wind sites and routes every kilowatt between turbines, sun and storage. Remote energy, as dependable as the grid.</p>
+          <div class="actions load l3">
+            <a class="btn btn-ink" href="#access">Join the pilot <span class="arrow" aria-hidden="true"></span></a>
+            <a class="btn btn-line" href="#forecast">See the system</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement" aria-label="Thesis">
+    <div class="wrap">
+      <span class="mono reveal">The premise</span>
+      <p class="big wipe">Deserts hold some of the strongest, steadiest wind on Earth, and almost none of the infrastructure. We build the intelligence that lets energy run <b>where people rarely can.</b></p>
+    </div>
+  </section>
+
+  <section class="product" id="forecast">
+    <div class="wrap">
+      <div class="p-head">
+        <span class="mono"><span class="sig">●</span>&nbsp; Module 01</span>
+        <h2 class="wipe">Forecast</h2>
+        <p>Models trained on satellite weather, met-mast and turbine SCADA data predict each site's output from the next hour to the next three days, with an honest band of uncertainty around every number.</p>
+        <div class="specs">
+          <div><span class="mono">Horizon</span><b>1 h → 72 h</b></div>
+          <div><span class="mono">Uncertainty</span><b>P10 – P90</b></div>
+          <div><span class="mono">Resolution</span><b>15 min</b></div>
+          <div><span class="mono">Coverage</span><b>Any desert site</b></div>
+        </div>
+      </div>
+      <div class="p-viz reveal">
+        <div class="instrument">
+          <div class="inst-head">
+            <span class="mono">Sample site · net output, MW</span>
+            <div class="legend mono">
+              <span><i></i>P50</span>
+              <span><i class="band"></i>P10–P90</span>
+              <span><i class="obs"></i>Observed</span>
+            </div>
+          </div>
+          <svg class="fcst" viewBox="0 0 640 300" role="img" aria-label="Illustrative 72-hour forecast: observed output up to now, then a P50 forecast line inside a widening P10 to P90 band">
+            <g>
+              <line class="gl" x1="40" y1="20" x2="640" y2="20"></line>
+              <line class="gl" x1="40" y1="100" x2="640" y2="100"></line>
+              <line class="gl" x1="40" y1="180" x2="640" y2="180"></line>
+              <line class="gl" x1="40" y1="260" x2="640" y2="260"></line>
+              <text x="0" y="24">50</text><text x="0" y="264">0</text>
+            </g>
+            <path class="band" d="M190 120 C 240 112, 280 70, 330 74 S 410 150, 460 140 S 560 52, 640 70 L640 180 C 560 176, 520 128, 460 196 S 380 150, 330 128 S 240 140, 190 136 Z"></path>
+            <path class="obs" d="M40 190 C 80 182, 110 150, 140 146 S 175 132, 190 128"></path>
+            <path class="p50 draw" pathLength="1" d="M190 128 C 240 124, 280 96, 330 100 S 410 172, 460 168 S 560 88, 640 120"></path>
+            <line class="now" x1="190" y1="14" x2="190" y2="260"></line>
+            <circle cx="190" cy="128" r="4" fill="#FF4A0D"></circle>
+            <text class="k" x="196" y="14">NOW</text>
+            <text x="40" y="288">−24 H</text><text x="296" y="288">+24 H</text><text x="452" y="288">+48 H</text><text x="602" y="288">+72 H</text>
+          </svg>
+        </div>
+        <span class="caption">Illustrative shape. Live forecasts are generated from each site's own data.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="product" id="grid">
+    <div class="wrap">
+      <div class="p-head">
+        <span class="mono"><span class="sig">●</span>&nbsp; Module 02</span>
+        <h2 class="wipe">Grid</h2>
+        <p>A routing layer for off-grid and hybrid microgrids. It decides, second by second, how power moves between wind, sun, batteries and the loads that cannot go dark.</p>
+        <div class="specs">
+          <div><span class="mono">Sources</span><b>Wind · Solar · BESS</b></div>
+          <div><span class="mono">Dispatch</span><b>Real time</b></div>
+          <div><span class="mono">Loads</span><b>Priority ranked</b></div>
+          <div><span class="mono">Audit</span><b>Every decision logged</b></div>
+        </div>
+      </div>
+      <div class="p-viz reveal">
+        <div class="instrument">
+          <div class="inst-head">
+            <span class="mono">Hybrid site · 24 h simulation</span>
+            <div class="totals mono">
+              <span>Gen <b id="g-gen">0.0</b> MW</span>
+              <span>Load <b id="g-load">0.0</b> MW</span>
+              <span>BESS <b id="g-soc">0</b>%</span>
+            </div>
+          </div>
+          <canvas id="gridsim" class="gridsim" role="img" aria-label="Simulated day at a hybrid desert site: wind, solar and a battery feed the tonie Grid hub, which routes power to a desalination plant, a telecom tower and a mine. Line weight and moving particles show power flow; when supply falls short, the lowest-priority load, the mine, is deferred."></canvas>
+          <ol class="glog" id="glog" aria-label="Routing decisions"></ol>
+        </div>
+        <span class="caption">Simulated site. Capacities, loads and priorities are illustrative and set per site.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="loop" id="loop">
+    <div class="wrap">
+      <div class="loop-copy">
+        <span class="mono">The system</span>
+        <h2 class="wipe">One loop, running every second.</h2>
+        <ol class="steps">
+          <li><b>Sense</b><p>Satellite weather, met masts, turbine SCADA and battery telemetry flow into one stream.</p></li>
+          <li><b>Predict</b><p>Each site's wind and output are forecast with uncertainty you can plan around.</p></li>
+          <li><b>Route</b><p>Power is dispatched between generation, storage and the loads that matter most.</p></li>
+          <li><b>Learn</b><p>Every decision is compared with what really happened, and the models improve.</p></li>
+        </ol>
+      </div>
+      <div class="loop-viz reveal">
+        <canvas id="loopsim" class="loopsim" role="img" aria-label="The tonie loop: a signal circles four stations. At Sense, data streams in from satellites, met masts, turbines and batteries. At Predict, a forecast curve with its uncertainty band is drawn. At Route, power splits to three loads. At Learn, the forecast is compared with what happened and the error shrinks, cycle after cycle."></canvas>
+      </div>
+    </div>
+  </section>
+
+  <section class="cond" aria-label="Built for desert conditions">
+    <div class="wrap">
+      <div class="cond-head">
+        <span class="mono">Conditions</span>
+        <h2 class="wipe">Made for the harshest place to run a turbine.</h2>
+      </div>
+      <ul class="cond-list reveal">
+        <li><h3>Sand and dust</h3><p>Tracks leading-edge erosion and soiling loss, and schedules cleaning before output drops.</p><span class="mono">µm · %</span></li>
+        <li><h3>Extreme heat</h3><p>Watches gearbox and battery temperatures and derates precisely, never blindly.</p><span class="mono">°C</span></li>
+        <li><h3>Remote sites</h3><p>Keeps running at the edge when the link drops, and syncs when it returns.</p><span class="mono">Uptime</span></li>
+        <li><h3>Far from the grid</h3><p>Balances wind, sun and storage so isolated loads never depend on luck.</p><span class="mono">km</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="where" id="where">
+    <div class="wrap">
+      <div class="where-head">
+        <span class="mono">Regions</span>
+        <h2 class="wipe">Wherever there is desert, there is wind.</h2>
+        <p class="muted" style="color:var(--ink-2);max-width:26em">One platform for every arid landscape on Earth, from sand seas to high plateaus.</p>
+      </div>
+      <ul class="places reveal" aria-label="Desert regions with local time">
+        <li class="hub"><span class="name">Sahara</span><span class="meta"><span class="mono">23° N · North Africa</span><span class="time" data-tz="Africa/Cairo">--:--</span></span></li>
+        <li><span class="name">Arabian</span><span class="meta"><span class="mono">22° N · Arabian Peninsula</span><span class="time" data-tz="Asia/Riyadh">--:--</span></span></li>
+        <li><span class="name">Thar</span><span class="meta"><span class="mono">27° N · India · Pakistan</span><span class="time" data-tz="Asia/Karachi">--:--</span></span></li>
+        <li><span class="name">Gobi</span><span class="meta"><span class="mono">42° N · Mongolia · China</span><span class="time" data-tz="Asia/Ulaanbaatar">--:--</span></span></li>
+        <li><span class="name">Mojave</span><span class="meta"><span class="mono">35° N · United States</span><span class="time" data-tz="America/Los_Angeles">--:--</span></span></li>
+        <li><span class="name">Atacama</span><span class="meta"><span class="mono">24° S · Chile</span><span class="time" data-tz="America/Santiago">--:--</span></span></li>
+        <li><span class="name">Kalahari</span><span class="meta"><span class="mono">23° S · Southern Africa</span><span class="time" data-tz="Africa/Johannesburg">--:--</span></span></li>
+        <li><span class="name">Outback</span><span class="meta"><span class="mono">25° S · Australia</span><span class="time" data-tz="Australia/Perth">--:--</span></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="road" aria-label="Roadmap">
+    <div class="wrap">
+      <span class="mono">Trajectory</span>
+      <h2 class="wipe">Toward desert energy that runs itself.</h2>
+      <div class="phases">
+        <div class="phase now" style="--w:100%"><span class="mono sig">Phase 1 · Summer 2028</span><h3>Forecasting pilots</h3><p>Forecast running live with the first operators on desert wind sites.</p></div>
+        <div class="phase" style="--w:40%"><span class="mono">Phase 2 · 2029</span><h3>Microgrid routing</h3><p>Grid deployed on hybrid sites: mines, telecom towers and desalination plants.</p></div>
+        <div class="phase" style="--w:12%"><span class="mono">Phase 3 · 2030+</span><h3>Autonomous networks</h3><p>Linked sites that forecast, trade and balance power with minimal human input.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="access" id="access">
+    <div class="wrap">
+      <h2 class="wipe">Bring your site <em>online.</em></h2>
+      <form id="access-form" novalidate>
+        <p style="color:#B8BFBA;font-size:17px;max-width:30em">We're working with a small group of wind operators, developers and off-grid energy users. Tell us about your site.</p>
+        <div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" required></div>
+        <div class="field"><label for="role">You are</label>
+          <select id="role" name="role"><option>Wind farm operator</option><option>Project developer</option><option>Off-grid energy user</option><option>Investor or partner</option></select></div>
+        <button class="btn" type="submit">Request access <span class="arrow" aria-hidden="true"></span></button>
+        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
+        <div class="mailrow">
+          <span class="mono" style="color:#9AA19C">Or write to us</span>
+          <div class="mailbox"><a class="mail" id="mail" href="mailto:contact@tonie.ai">contact@tonie.ai</a><button type="button" class="copy" id="copy-mail" aria-label="Copy email address">Copy</button></div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row mono" style="color:#9AA19C">
+      <span>tonie.ai · Desert wind intelligence</span>
+      <span style="display:flex;gap:24px"><a href="#top">Imprint</a><a href="#top">Privacy</a><a href="mailto:contact@tonie.ai" style="text-transform:none">contact@tonie.ai</a></span>
+    </div>
+    <div class="giant" aria-hidden="true">tonie</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Silk wind field: thousands of hairlines advected through a slow flow field */
+  const c = document.getElementById('flow'), x = c.getContext('2d');
+  let W=0,H=0,P=[],t=0,run=true,raf=0;
+  function noise(px,py){
+    return Math.sin(px*0.0021 + t*0.25) * 0.9
+         + Math.sin(py*0.0047 - t*0.18 + Math.sin(px*0.001)) * 0.6
+         + Math.cos((px+py)*0.0013 + t*0.11) * 0.4;
+  }
+  function seed(){ return {x:Math.random()*W*1.1 - W*0.1, y:Math.random()*H, a:80+Math.random()*260, o:Math.random()<0.025, s:Math.random()<0.22, k:Math.random()}; }
+  function size(){
+    const r = c.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
+    W = r.width; H = r.height; c.width = W*d; c.height = H*d; x.setTransform(d,0,0,d,0,0);
+    x.fillStyle = '#E6E8E6'; x.fillRect(0,0,W,H);
+    P = Array.from({length: Math.round(Math.min(2200, W*H/420))}, seed);
+  }
+  function step(){
+    t += 0.006;
+    x.fillStyle = 'rgba(230,232,230,0.035)'; x.fillRect(0,0,W,H);
+    x.lineWidth = 0.6;
+    for(const p of P){
+      const ang = noise(p.x,p.y)*0.55;
+      const nx = p.x + Math.cos(ang)*1.4, ny = p.y + Math.sin(ang)*1.4;
+      x.strokeStyle = p.o ? 'rgba(255,74,13,0.55)' : p.s ? (p.k < 0.5 ? 'rgba(201,154,92,0.42)' : 'rgba(176,128,70,0.34)') : 'rgba(18,20,19,0.16)';
+      x.lineWidth = p.s ? 0.9 : 0.6;
+      x.beginPath(); x.moveTo(p.x,p.y); x.lineTo(nx,ny); x.stroke();
+      p.x = nx; p.y = ny; p.a--;
+      if(p.a<0 || p.x>W+4 || p.y<-4 || p.y>H+4) Object.assign(p, seed(), {x: Math.random()*W*0.15 - 20});
+    }
+  }
+  function loop(){ step(); if(run) raf = requestAnimationFrame(loop); }
+  size();
+  if(reduce){ for(let i=0;i<260;i++) step(); }
+  else {
+    for(let i=0;i<120;i++) step();
+    raf = requestAnimationFrame(loop);
+    new IntersectionObserver(([e])=>{
+      if(e.isIntersecting && !run){ run = true; raf = requestAnimationFrame(loop); }
+      if(!e.isIntersecting){ run = false; cancelAnimationFrame(raf); }
+    }).observe(c);
+  }
+  let rt; addEventListener('resize', ()=>{ clearTimeout(rt); rt = setTimeout(()=>{ size(); for(let i=0;i<(reduce?260:120);i++) step(); }, 160); });
+
+  /* Desert mesh: a perspective wireframe of dunes drifting toward the viewer, with gusts of wind running over it */
+  const mc = document.getElementById('mesh'), m2 = mc.getContext('2d');
+  let MW=0, MH=0, mt=0, mrun=true, mraf=0;
+  const CAM = 2.4, ZN = 4.5, ZF = 46, ROWS = 46, XS = 30, COLS = 120;
+  function dune(px, pz){
+    return 0.95*Math.sin(px*0.34 + pz*0.12) + 0.6*Math.sin(px*0.13 - pz*0.27) + 0.22*Math.sin(px*1.05 + pz*0.6) + 0.35*Math.cos(pz*0.09 - px*0.05);
+  }
+  function msize(){
+    const r = mc.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
+    MW = r.width; MH = r.height; mc.width = MW*d; mc.height = MH*d; m2.setTransform(d,0,0,d,0,0);
+  }
+  function mdraw(){
+    const hz = MH*0.52, f = MH*0.9*(MH ? 1 : 0), cx = MW*0.5;
+    const drift = mt*1.1;
+    const P = (px, pz, py)=>[cx + px*f/pz, hz + (CAM - py)*f/pz];
+    m2.clearRect(0,0,MW,MH);
+    // soft sand wash under the mesh
+    const wash = m2.createLinearGradient(0, hz, 0, MH);
+    wash.addColorStop(0, 'rgba(201,154,92,0)'); wash.addColorStop(1, 'rgba(201,154,92,0.10)');
+    m2.fillStyle = wash; m2.fillRect(0, hz, MW, MH - hz);
+    // horizon
+    m2.strokeStyle = 'rgba(18,20,19,0.18)'; m2.lineWidth = 1;
+    m2.beginPath(); m2.moveTo(0, hz + CAM*f/ZF*0.6); m2.lineTo(MW, hz + CAM*f/ZF*0.6); m2.stroke();
+    // rows (lines across the dunes)
+    for(let i=0;i<ROWS;i++){
+      const u = i/(ROWS-1), pz = ZN + Math.pow(u, 1.6)*(ZF - ZN);
+      const fade = Math.pow(1 - (pz - ZN)/(ZF - ZN), 1.3);
+      m2.strokeStyle = 'rgba(122,92,54,' + (0.06 + 0.26*fade).toFixed(3) + ')';
+      m2.lineWidth = 0.5 + 0.5*fade;
+      m2.beginPath();
+      for(let j=0;j<=COLS;j++){
+        const px = -XS + (2*XS)*j/COLS;
+        const [sx, sy] = P(px, pz, dune(px, pz + drift));
+        j ? m2.lineTo(sx, sy) : m2.moveTo(sx, sy);
+      }
+      m2.stroke();
+    }
+    // columns (lines running toward the horizon)
+    const g = m2.createLinearGradient(0, hz, 0, MH);
+    g.addColorStop(0, 'rgba(18,20,19,0)'); g.addColorStop(1, 'rgba(18,20,19,0.16)');
+    m2.strokeStyle = g; m2.lineWidth = 0.6;
+    for(let j=0;j<=COLS;j+=2){
+      const px = -XS + (2*XS)*j/COLS;
+      m2.beginPath();
+      for(let i=0;i<ROWS;i++){
+        const u = i/(ROWS-1), pz = ZN + Math.pow(u, 1.6)*(ZF - ZN);
+        const [sx, sy] = P(px, pz, dune(px, pz + drift));
+        i ? m2.lineTo(sx, sy) : m2.moveTo(sx, sy);
+      }
+      m2.stroke();
+    }
+    // wind gusts flowing over the terrain, left to right
+    const gusts = [
+      {z:7,  h:.9, c:'rgba(255,74,13,0.75)', w:1.4, sp:70, d:[60, 340]},
+      {z:10, h:1.2,c:'rgba(176,128,70,0.65)', w:1.1, sp:55, d:[90, 300]},
+      {z:14, h:.8, c:'rgba(18,20,19,0.40)', w:.9, sp:48, d:[50, 260]},
+      {z:19, h:1.4,c:'rgba(201,154,92,0.70)', w:1, sp:42, d:[110, 380]},
+      {z:26, h:1.1,c:'rgba(255,74,13,0.45)', w:.8, sp:36, d:[70, 420]},
+      {z:34, h:1.5,c:'rgba(176,128,70,0.45)', w:.7, sp:30, d:[60, 300]}
+    ];
+    m2.lineCap = 'round';
+    gusts.forEach((q, k)=>{
+      m2.strokeStyle = q.c; m2.lineWidth = q.w; m2.setLineDash(q.d); m2.lineDashOffset = -mt*q.sp*6 - k*137;
+      m2.beginPath();
+      for(let j=0;j<=COLS;j++){
+        const px = -XS + (2*XS)*j/COLS;
+        const pz = q.z + Math.sin(px*0.12 + mt*0.6 + k)*0.8;
+        const py = dune(px, pz + drift) + q.h + Math.sin(px*0.3 - mt*1.4 + k)*0.18;
+        const [sx, sy] = P(px, pz, py);
+        j ? m2.lineTo(sx, sy) : m2.moveTo(sx, sy);
+      }
+      m2.stroke();
+    });
+    m2.setLineDash([]);
+  }
+  function mloop(){ mt += 0.008; mdraw(); if(mrun) mraf = requestAnimationFrame(mloop); }
+  msize(); mdraw();
+  if(!reduce){
+    mraf = requestAnimationFrame(mloop);
+    new IntersectionObserver(([e])=>{
+      if(e.isIntersecting && !mrun){ mrun = true; mraf = requestAnimationFrame(mloop); }
+      if(!e.isIntersecting){ mrun = false; cancelAnimationFrame(mraf); }
+    }).observe(mc);
+  }
+  addEventListener('resize', ()=>{ msize(); mdraw(); });
+
+  /* Hybrid site simulation: a day of wind, sun and storage routed to prioritised loads */
+  (function(){
+    const cv = document.getElementById('gridsim'); if(!cv) return;
+    const g = cv.getContext('2d');
+    const INK='#121413', MUTE='#5D635F', HAIR='#B9BEBA', SAND='#B08046', SAND2='#C99A5C', SIG='#FF4A0D', PAPER='#F1F2F0';
+    const VW=640, VH=380;
+    let scale=1;
+    function gsize(){ const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1,2); scale = r.width/VW; cv.width = r.width*d; cv.height = r.width*(VH/VW)*d; g.setTransform(d*scale,0,0,d*scale,0,0); }
+    const HUB={x:320,y:165};
+    const SRC={wind:{x:78,y:62}, solar:{x:78,y:165}, bess:{x:78,y:268}};
+    const LOAD={desal:{x:562,y:62,name:'DESAL',p:1,mw:3.0}, tower:{x:562,y:165,name:'TOWER',p:2,mw:0.6}, mine:{x:562,y:268,name:'MINE',p:3,mw:3.4}};
+    const curve=(a,b)=>({a, c1:{x:(a.x+b.x)/2, y:a.y}, c2:{x:(a.x+b.x)/2, y:b.y}, b});
+    const pt=(cu,t)=>{const u=1-t; return {x:u*u*u*cu.a.x+3*u*u*t*cu.c1.x+3*u*t*t*cu.c2.x+t*t*t*cu.b.x, y:u*u*u*cu.a.y+3*u*u*t*cu.c1.y+3*u*t*t*cu.c2.y+t*t*t*cu.b.y};};
+    const links={
+      wind:curve({x:SRC.wind.x+26,y:SRC.wind.y}, {x:HUB.x-30,y:HUB.y}),
+      solar:curve({x:SRC.solar.x+26,y:SRC.solar.y}, {x:HUB.x-30,y:HUB.y}),
+      bess:curve({x:SRC.bess.x+26,y:SRC.bess.y}, {x:HUB.x-30,y:HUB.y}),
+      desal:curve({x:HUB.x+30,y:HUB.y}, {x:LOAD.desal.x-26,y:LOAD.desal.y}),
+      tower:curve({x:HUB.x+30,y:HUB.y}, {x:LOAD.tower.x-26,y:LOAD.tower.y}),
+      mine:curve({x:HUB.x+30,y:HUB.y}, {x:LOAD.mine.x-26,y:LOAD.mine.y})
+    };
+    const S={h:5.5, soc:0.55, flows:{wind:0,solar:0,bess:0,desal:0,tower:0,mine:0}, charging:false, rot:0, state:{}};
+    const CAP=12, BMAX=4;
+    const parts=[];
+    const acc={wind:0,solar:0,bess:0,desal:0,tower:0,mine:0};
+    const fmt=h=>{const H=Math.floor(h)%24, M=Math.floor((h%1)*60); return String(H).padStart(2,'0')+':'+String(M).padStart(2,'0');};
+    const logEl=document.getElementById('glog');
+    function log(msg){
+      const li=document.createElement('li');
+      li.innerHTML='<span></span><span></span>';
+      li.children[0].textContent=fmt(S.h); li.children[1].textContent=msg;
+      logEl.prepend(li); while(logEl.children.length>3) logEl.lastChild.remove();
+    }
+    const gen=document.getElementById('g-gen'), lo=document.getElementById('g-load'), so=document.getElementById('g-soc');
+    function sim(dh){
+      S.h=(S.h+dh)%24;
+      const h=S.h;
+      const solar=Math.max(0, Math.sin(Math.PI*(h-6)/12))*5.2;
+      const wind=Math.max(0.3, 3.4 + 1.8*Math.cos((h-3)*Math.PI/12) + 1.1*Math.sin(h*1.7) + 0.6*Math.sin(h*4.3));
+      const mineOn = h>=6 && h<22;
+      const demand={desal:LOAD.desal.mw, tower:LOAD.tower.mw, mine:mineOn?LOAD.mine.mw:0};
+      let supply=wind+solar, need=demand.desal+demand.tower+demand.mine, bess=0;
+      if(supply>=need){ bess=-Math.min(BMAX, supply-need, (1-S.soc)*CAP/Math.max(dh,1e-3)); }
+      else { bess=Math.min(BMAX, need-supply, Math.max(0,(S.soc-0.1))*CAP/Math.max(dh,1e-3)); }
+      S.soc=Math.min(1, Math.max(0, S.soc - bess*dh/CAP));
+      let avail=supply+Math.max(0,bess);
+      const served={};
+      ['desal','tower','mine'].forEach(k=>{ served[k]=Math.min(demand[k], avail); avail-=served[k]; });
+      const curtail=Math.max(0, supply + bess - (served.desal+served.tower+served.mine));
+      S.flows={wind, solar, bess, desal:served.desal, tower:served.tower, mine:served.mine};
+      S.charging=bess<-0.05;
+      const st={
+        charge: bess<-0.2 ? 'charge' : (bess>0.2 ? 'discharge' : 'idle'),
+        shed: mineOn && served.mine < demand.mine-0.05,
+        sun: solar>0.4, mine: mineOn, full: S.soc>0.98 && curtail>0.3
+      };
+      const p=S.state;
+      if(p.charge!==undefined){
+        if(st.sun && !p.sun) log('Sunrise. Solar online, routing surplus to battery');
+        if(!st.sun && p.sun) log('Solar offline. Wind and battery carry the site');
+        if(st.charge!==p.charge) log(st.charge==='charge' ? 'Surplus '+(-bess).toFixed(1)+' MW → battery charging' : st.charge==='discharge' ? 'Deficit. Battery discharging '+bess.toFixed(1)+' MW' : 'Supply matches demand');
+        if(st.shed && !p.shed) log('Wind lull. Mine deferred to protect desal and tower');
+        if(!st.shed && p.shed && st.mine) log('Supply restored. Mine back online');
+        if(st.mine && !p.mine) log('Mine shift starts. Priority 3 load connected');
+        if(!st.mine && p.mine) log('Mine shift ends. Load released');
+        if(st.full && !p.full) log('Battery full. Excess wind curtailed');
+      }
+      S.state=st;
+      S.need=demand; S.supply=supply;
+      gen.textContent=supply.toFixed(1); lo.textContent=(served.desal+served.tower+served.mine).toFixed(1); so.textContent=Math.round(S.soc*100);
+    }
+    function spawn(dt){
+      const f=S.flows;
+      const rate={wind:f.wind, solar:f.solar, bess:Math.abs(f.bess), desal:f.desal, tower:f.tower, mine:f.mine};
+      for(const k in rate){
+        acc[k]+=rate[k]*dt*2.2;
+        while(acc[k]>=1){ acc[k]-=1; parts.push({k, t:0, rev: k==='bess' && f.bess<0, sp:0.45+Math.random()*0.2}); }
+      }
+    }
+    function drawLink(k, mw, color){
+      const cu=links[k], w=0.6+mw*0.75;
+      g.strokeStyle=HAIR; g.lineWidth=1; g.beginPath(); g.moveTo(cu.a.x,cu.a.y); g.bezierCurveTo(cu.c1.x,cu.c1.y,cu.c2.x,cu.c2.y,cu.b.x,cu.b.y); g.stroke();
+      if(mw>0.05){ g.strokeStyle=color; g.globalAlpha=0.22; g.lineWidth=w; g.beginPath(); g.moveTo(cu.a.x,cu.a.y); g.bezierCurveTo(cu.c1.x,cu.c1.y,cu.c2.x,cu.c2.y,cu.b.x,cu.b.y); g.stroke(); g.globalAlpha=1; }
+    }
+    function label(txt,x,y,align,color,size){ g.fillStyle=color||MUTE; g.font=(size||9)+'px "Martian Mono", ui-monospace, monospace'; g.textAlign=align||'center'; g.fillText(txt,x,y); }
+    function draw(){
+      g.clearRect(0,0,VW,VH);
+      const f=S.flows;
+      drawLink('wind',f.wind,INK); drawLink('solar',f.solar,SAND); drawLink('bess',Math.abs(f.bess),SIG);
+      drawLink('desal',f.desal,INK); drawLink('tower',f.tower,INK); drawLink('mine',f.mine,INK);
+      // particles
+      for(const p of parts){
+        const q=pt(links[p.k], p.rev?1-p.t:p.t);
+        g.fillStyle = p.k==='solar'?SAND : p.k==='bess'?SIG : p.k==='wind'?INK : SIG;
+        g.beginPath(); g.arc(q.x,q.y, p.k==='wind'||p.k==='solar'||p.k==='bess'?2.1:2.4, 0, Math.PI*2); g.fill();
+      }
+      // wind turbine
+      const w=SRC.wind;
+      g.strokeStyle=INK; g.lineWidth=1.4; g.lineCap='round';
+      g.beginPath(); g.moveTo(w.x,w.y+2); g.lineTo(w.x,w.y+28); g.stroke();
+      g.save(); g.translate(w.x,w.y); g.rotate(S.rot);
+      for(let i=0;i<3;i++){ g.rotate(Math.PI*2/3); g.beginPath(); g.moveTo(0,0); g.lineTo(0,-19); g.stroke(); }
+      g.restore(); g.fillStyle=SIG; g.beginPath(); g.arc(w.x,w.y,2.4,0,Math.PI*2); g.fill();
+      label('WIND',w.x,w.y-30,'center',INK,10); label(f.wind.toFixed(1)+' MW',w.x,w.y+44);
+      // sun with day arc
+      const s=SRC.solar, solarOn=f.solar>0.05;
+      g.strokeStyle=HAIR; g.lineWidth=1; g.beginPath(); g.arc(s.x,s.y+14,24,Math.PI,0); g.stroke();
+      const ang=Math.PI + Math.min(1,Math.max(0,(S.h-6)/12))*Math.PI;
+      const sx=s.x+Math.cos(ang)*24, sy=s.y+14+Math.sin(ang)*24;
+      g.fillStyle = solarOn?SAND2:PAPER; g.strokeStyle=solarOn?SAND:HAIR; g.lineWidth=1.2;
+      g.beginPath(); g.arc(sx,sy,6,0,Math.PI*2); g.fill(); g.stroke();
+      if(solarOn){ g.globalAlpha=Math.min(1,f.solar/4); for(let i=0;i<8;i++){ const a=i*Math.PI/4 + S.rot*0.1; g.beginPath(); g.moveTo(sx+Math.cos(a)*9,sy+Math.sin(a)*9); g.lineTo(sx+Math.cos(a)*12,sy+Math.sin(a)*12); g.stroke(); } g.globalAlpha=1; }
+      label('SOLAR',s.x,s.y-22,'center',INK,10); label(f.solar.toFixed(1)+' MW',s.x,s.y+40);
+      // battery
+      const b=SRC.bess;
+      g.strokeStyle=INK; g.lineWidth=1.2; g.strokeRect(b.x-12,b.y-18,24,36); g.fillStyle=INK; g.fillRect(b.x-5,b.y-22,10,3);
+      const fh=32*S.soc; g.fillStyle = S.soc<0.2?SIG:INK; g.globalAlpha=0.85; g.fillRect(b.x-10,b.y+16-fh,20,fh); g.globalAlpha=1;
+      label('BESS',b.x,b.y-30,'center',INK,10);
+      label((f.bess<-0.05?'▲ ':'')+(f.bess>0.05?'▼ ':'')+Math.round(S.soc*100)+'%',b.x,b.y+34);
+      // hub
+      const pulse=(performance.now()/1000)%2/2;
+      g.strokeStyle=SIG; g.globalAlpha=1-pulse; g.lineWidth=1; g.beginPath(); g.arc(HUB.x,HUB.y,30+pulse*26,0,Math.PI*2); g.stroke(); g.globalAlpha=1;
+      g.fillStyle=PAPER; g.strokeStyle=SIG; g.lineWidth=1.5; g.beginPath(); g.arc(HUB.x,HUB.y,30,0,Math.PI*2); g.fill(); g.stroke();
+      label('tonie',HUB.x,HUB.y-2,'center',INK,11); label('GRID',HUB.x,HUB.y+11,'center',MUTE,8);
+      // loads
+      for(const k of ['desal','tower','mine']){
+        const L=LOAD[k], need=S.need?S.need[k]:0, got=f[k], off=need===0, shed=need>0 && got<need-0.05;
+        g.lineWidth=1.2; g.strokeStyle= shed?SIG:INK;
+        g.fillStyle = off?PAPER : shed?PAPER : INK;
+        g.beginPath(); g.rect(L.x-12,L.y-12,24,24); g.fill(); g.stroke();
+        if(shed){ g.setLineDash([3,3]); g.strokeStyle=SIG; g.strokeRect(L.x-17,L.y-17,34,34); g.setLineDash([]); }
+        if(!off && !shed){ g.fillStyle=SIG; g.beginPath(); g.arc(L.x,L.y,2.4,0,Math.PI*2); g.fill(); }
+        label(L.name,L.x,L.y-22,'center',INK,10);
+        label(off?'OFF SHIFT' : shed?'DEFERRED' : got.toFixed(1)+' MW', L.x, L.y+28, 'center', shed?SIG:MUTE);
+        label('P'+L.p, L.x+22, L.y+4, 'left', MUTE);
+      }
+      // 24h timeline
+      const tx=40, tw=560, ty=352;
+      g.strokeStyle=HAIR; g.lineWidth=1; g.beginPath(); g.moveTo(tx,ty); g.lineTo(tx+tw,ty); g.stroke();
+      g.fillStyle=SAND2; g.globalAlpha=0.35; g.fillRect(tx+tw*6/24,ty-3,tw*12/24,6); g.globalAlpha=1;
+      for(let i=0;i<=24;i+=6){ const xx=tx+tw*i/24; g.beginPath(); g.moveTo(xx,ty-4); g.lineTo(xx,ty+4); g.stroke(); label(String(i).padStart(2,'0'),xx,ty+18); }
+      const mx=tx+tw*S.h/24; g.fillStyle=SIG; g.beginPath(); g.moveTo(mx,ty-5); g.lineTo(mx+5,ty-12); g.lineTo(mx-5,ty-12); g.closePath(); g.fill();
+      label(fmt(S.h),mx,ty-16,'center',INK,9);
+    }
+    let last=performance.now(), vis=true, rf=0;
+    function frame(now){
+      const dt=Math.min(0.05,(now-last)/1000); last=now;
+      const dh=dt*24/48;
+      sim(dh); spawn(dt);
+      for(let i=parts.length-1;i>=0;i--){ parts[i].t+=dt*parts[i].sp; if(parts[i].t>=1) parts.splice(i,1); }
+      S.rot+=dt*S.flows.wind*0.9;
+      draw();
+      if(vis) rf=requestAnimationFrame(frame);
+    }
+    gsize();
+    if(reduce){ S.h=13.5; sim(0.001); log('Surplus routed to battery charging'); draw(); }
+    else {
+      sim(0.001); log('Wind carrying the site before sunrise');
+      rf=requestAnimationFrame(frame);
+      new IntersectionObserver(([e])=>{
+        if(e.isIntersecting && !vis){ vis=true; last=performance.now(); rf=requestAnimationFrame(frame); }
+        if(!e.isIntersecting){ vis=false; cancelAnimationFrame(rf); }
+      }).observe(cv);
+    }
+    addEventListener('resize', ()=>{ gsize(); draw(); });
+  })();
+
+  /* The loop: Sense → Predict → Route → Learn, each stage acted out in the centre */
+  (function(){
+    const cv=document.getElementById('loopsim'); if(!cv) return;
+    const g=cv.getContext('2d');
+    const PAPER='#F1F2F0', GREY='#6A716D', DIM='#3C423F', SOFT='#B8BFBA', SIG='#FF4A0D', SAND='#C99A5C';
+    const V=560, C=280, R=190, PERIOD=10;
+    const items=[...document.querySelectorAll('.steps li')];
+    const ST=[{n:'SENSE',a:-Math.PI/2},{n:'PREDICT',a:0},{n:'ROUTE',a:Math.PI/2},{n:'LEARN',a:Math.PI}];
+    const SRCS=[{n:'SATELLITE',a:-2.3},{n:'MET MAST',a:-0.85},{n:'SCADA',a:0.85},{n:'BESS',a:2.3}];
+    let T=0, cycle=1, err=9.8, lastStage=-1, prevErr=9.8;
+    const data=[];
+    function size(){ const r=cv.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2); cv.width=r.width*d; cv.height=r.width*d; g.setTransform(d*r.width/V,0,0,d*r.width/V,0,0); }
+    const txt=(s,x,y,al,col,sz,font)=>{ g.fillStyle=col; g.font=(sz||10)+'px '+(font||'"Martian Mono", ui-monospace, monospace'); g.textAlign=al||'center'; g.fillText(s,x,y); };
+    const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    const fc=x=>Math.sin(x*2.1+0.4)*0.55+Math.sin(x*5.3)*0.18;            // forecast shape, x in 0..1
+    const ob=x=>Math.sin(x*2.1+0.25)*0.6+Math.sin(x*5.3+0.3)*0.2+Math.sin(x*11)*0.05; // what really happened
+    function curve(f, x0, w, y0, h, upto){
+      g.beginPath();
+      for(let i=0;i<=60*upto;i++){ const u=i/60, px=x0+u*w, py=y0-f(u)*h; i?g.lineTo(px,py):g.moveTo(px,py); }
+    }
+    function draw(){
+      const p=(T%PERIOD)/PERIOD, stage=Math.floor(p*4), lp=(p*4)%1;
+      const fade=Math.min(1, lp/0.14, (1-lp)/0.14);
+      g.clearRect(0,0,V,V);
+      // rings
+      g.strokeStyle=DIM; g.lineWidth=1; g.beginPath(); g.arc(C,C,R,0,Math.PI*2); g.stroke();
+      g.setLineDash([2,6]); g.beginPath(); g.arc(C,C,128,0,Math.PI*2); g.stroke(); g.setLineDash([]);
+      for(let i=0;i<72;i++){ const a=i/72*Math.PI*2, l=i%18===0?12:4; g.beginPath(); g.moveTo(C+Math.cos(a)*(R+6),C+Math.sin(a)*(R+6)); g.lineTo(C+Math.cos(a)*(R+6+l),C+Math.sin(a)*(R+6+l)); g.strokeStyle=i%18===0?GREY:DIM; g.stroke(); }
+      // trail of this cycle
+      const ang=-Math.PI/2+p*Math.PI*2;
+      g.strokeStyle=SIG; g.lineWidth=2; g.lineCap='round'; g.beginPath(); g.arc(C,C,R,-Math.PI/2,ang); g.stroke();
+      const tg=g.createConicGradient ? null : null;
+      // stations
+      ST.forEach((s,i)=>{
+        const x=C+Math.cos(s.a)*R, y=C+Math.sin(s.a)*R, on=i===stage, done=i<stage;
+        if(on){ const q=(T*1.2)%1; g.strokeStyle=SIG; g.globalAlpha=1-q; g.lineWidth=1; g.beginPath(); g.arc(x,y,8+q*22,0,Math.PI*2); g.stroke(); g.globalAlpha=1; }
+        g.fillStyle=on||done?SIG:'#121413'; g.strokeStyle=on||done?SIG:SOFT; g.lineWidth=1.2;
+        g.beginPath(); g.arc(x,y,on?7:5.5,0,Math.PI*2); g.fill(); g.stroke();
+        const lx=C+Math.cos(s.a)*(R+42), ly=C+Math.sin(s.a)*(R+42)+4;
+        txt(s.n, lx, ly, 'center', on?SIG:SOFT, 11);
+      });
+      // runner
+      const rx=C+Math.cos(ang)*R, ry=C+Math.sin(ang)*R;
+      g.fillStyle=SIG; g.shadowColor=SIG; g.shadowBlur=14; g.beginPath(); g.arc(rx,ry,5,0,Math.PI*2); g.fill(); g.shadowBlur=0;
+      // centre stage
+      g.globalAlpha=fade;
+      if(stage===0){
+        SRCS.forEach(s=>{ txt(s.n, C+Math.cos(s.a)*150, C+Math.sin(s.a)*150+3, 'center', GREY, 8); });
+        if(!reduce && Math.random()<0.9){ const s=SRCS[(Math.random()*4)|0]; data.push({a:s.a+(Math.random()-.5)*0.35, r:140, v:60+Math.random()*60}); }
+        for(const d of data){ const x=C+Math.cos(d.a)*d.r, y=C+Math.sin(d.a)*d.r; g.fillStyle=d.r<60?SIG:PAPER; g.fillRect(x-1.2,y-1.2,2.4,2.4); }
+        g.strokeStyle=SIG; g.lineWidth=1; g.beginPath(); g.arc(C,C,22+Math.sin(T*6)*2,0,Math.PI*2); g.stroke();
+        txt('INGEST', C, C+4, 'center', PAPER, 10);
+        txt((1200+Math.floor(lp*3400)).toLocaleString('en-US')+' SIGNALS', C, C+96, 'center', GREY, 9);
+      } else if(stage===1){
+        const x0=C-92, w=184, y0=C+6, h=48, k=ease(Math.min(1,lp*1.4));
+        g.fillStyle='rgba(201,154,92,0.16)'; g.beginPath();
+        for(let i=0;i<=60*k;i++){ const u=i/60; const py=y0-fc(u)*h-(6+u*22); i?g.lineTo(x0+u*w,py):g.moveTo(x0+u*w,py); }
+        for(let i=Math.floor(60*k);i>=0;i--){ const u=i/60; g.lineTo(x0+u*w, y0-fc(u)*h+(6+u*22)); }
+        g.closePath(); g.fill();
+        g.strokeStyle=SIG; g.lineWidth=2; curve(fc,x0,w,y0,h,k); g.stroke();
+        g.strokeStyle=DIM; g.lineWidth=1; g.beginPath(); g.moveTo(x0,y0+62); g.lineTo(x0+w,y0+62); g.stroke();
+        txt('NOW', x0, y0+78, 'left', GREY, 8); txt('+72 H', x0+w, y0+78, 'right', GREY, 8);
+        txt('P50 · P10–P90', C, C-80, 'center', SOFT, 9);
+      } else if(stage===2){
+        const hub={x:C,y:C-34}, outs=[{x:C-86,y:C+62,n:'DESAL',p:'P1'},{x:C,y:C+74,n:'TOWER',p:'P2'},{x:C+86,y:C+62,n:'MINE',p:'P3'}];
+        outs.forEach((o,i)=>{
+          g.strokeStyle=DIM; g.lineWidth=1; g.beginPath(); g.moveTo(hub.x,hub.y); g.quadraticCurveTo(o.x,hub.y+10,o.x,o.y-10); g.stroke();
+          for(let j=0;j<3;j++){ const t=((T*0.9+j/3+i*0.13)%1); const u=1-t; const x=u*u*hub.x+2*u*t*o.x+t*t*o.x, y=u*u*hub.y+2*u*t*(hub.y+10)+t*t*(o.y-10); g.fillStyle=SIG; g.beginPath(); g.arc(x,y,2.2,0,Math.PI*2); g.fill(); }
+          g.strokeStyle=PAPER; g.lineWidth=1.1; g.strokeRect(o.x-7,o.y-7,14,14);
+          txt(o.n, o.x, o.y+22, 'center', SOFT, 8); txt(o.p, o.x, o.y+34, 'center', GREY, 8);
+        });
+        g.fillStyle='#121413'; g.strokeStyle=SIG; g.lineWidth=1.4; g.beginPath(); g.arc(hub.x,hub.y,14,0,Math.PI*2); g.fill(); g.stroke();
+        txt('DISPATCH', C, C-74, 'center', SOFT, 9);
+      } else {
+        const x0=C-92, w=184, y0=C+2, h=48, k=ease(Math.min(1,lp*1.3));
+        const mix=u=>fc(u)+(ob(u)-fc(u))*k*0.6;
+        g.strokeStyle=PAPER; g.lineWidth=1.1; g.setLineDash([3,4]); curve(ob,x0,w,y0,h,1); g.stroke(); g.setLineDash([]);
+        g.strokeStyle=SIG; g.lineWidth=2; curve(mix,x0,w,y0,h,1); g.stroke();
+        txt('FORECAST vs ACTUAL', C, C-80, 'center', SOFT, 9);
+        const shown=prevErr+(err-prevErr)*k;
+        txt('ERROR '+shown.toFixed(1)+'%', C, C+78, 'center', PAPER, 11);
+        txt('▼ '+(prevErr-err).toFixed(2)+' pt', C, C+94, 'center', SIG, 9);
+      }
+      g.globalAlpha=1;
+      txt('CYCLE '+String(cycle).padStart(4,'0'), C, C-112, 'center', GREY, 9);
+      txt('SIMULATED', C, C+120, 'center', DIM, 8);
+    }
+    function step(dt){
+      T+=dt;
+      const p=(T%PERIOD)/PERIOD, stage=Math.floor(p*4);
+      for(let i=data.length-1;i>=0;i--){ data[i].r-=data[i].v*dt; if(data[i].r<24) data.splice(i,1); }
+      if(stage!==lastStage){
+        if(stage===3){ prevErr=err; err=Math.max(5.2, err-(0.04+Math.random()*0.14)); }
+        if(stage===0 && lastStage===3) cycle++;
+        items.forEach((li,i)=>li.classList.toggle('on', i===stage));
+        lastStage=stage;
+      }
+    }
+    let last=performance.now(), vis=true, rf=0;
+    function frame(now){ const dt=Math.min(0.05,(now-last)/1000); last=now; step(dt); draw(); if(vis) rf=requestAnimationFrame(frame); }
+    size();
+    if(reduce){ T=PERIOD*0.37; step(0); draw(); }
+    else {
+      rf=requestAnimationFrame(frame);
+      new IntersectionObserver(([e])=>{
+        if(e.isIntersecting && !vis){ vis=true; last=performance.now(); rf=requestAnimationFrame(frame); }
+        if(!e.isIntersecting){ vis=false; cancelAnimationFrame(rf); }
+      }).observe(cv);
+    }
+    addEventListener('resize', ()=>{ size(); draw(); });
+  })();
+
+  /* Turbine parallax: the tower drifts slightly as you scroll */
+  const turb = document.querySelector('.turbine');
+  if(!reduce){
+    addEventListener('scroll', ()=>{ const y = Math.min(scrollY, 900); turb.style.transform = 'translateY(' + (y*0.18) + 'px)'; }, {passive:true});
+  }
+
+  /* SMIL animations obey reduced motion too */
+  if(reduce) document.querySelectorAll('svg').forEach(s=>{ try{ s.pauseAnimations(); }catch(e){} });
+
+  /* Local times for regions */
+  const times = document.querySelectorAll('[data-tz]');
+  function tick(){
+    const now = new Date();
+    times.forEach(el=>{
+      try{ el.textContent = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:el.dataset.tz}).format(now); }catch(e){ el.textContent = ''; }
+    });
+  }
+  tick(); setInterval(tick, 15000);
+
+  /* Copy email */
+  const cb = document.getElementById('copy-mail'), mail = document.getElementById('mail');
+  cb.addEventListener('click', ()=>{
+    const done = ()=>{ cb.textContent = 'Copied'; setTimeout(()=>{ cb.textContent = 'Copy'; }, 1800); };
+    const fallback = ()=>{ const r = document.createRange(); r.selectNodeContents(mail); const s = getSelection(); s.removeAllRanges(); s.addRange(r); cb.textContent = 'Selected'; setTimeout(()=>{ cb.textContent = 'Copy'; }, 1800); };
+    try{ navigator.clipboard.writeText('contact@tonie.ai').then(done, fallback); }catch(e){ fallback(); }
+  });
+
+  /* Form (no backend yet) */
+  const f = document.getElementById('access-form'), m = document.getElementById('form-msg');
+  f.addEventListener('submit', e=>{
+    e.preventDefault();
+    const em = document.getElementById('email');
+    if(!em.value || !em.checkValidity()){ m.textContent = 'Enter a valid work email so we can reach you.'; em.focus(); return; }
+    m.textContent = 'Thank you. This preview form is not connected yet, so please also write to contact@tonie.ai.';
+  });
+})();
+</script>
+</body>
+</html>
